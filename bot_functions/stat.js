@@ -1,4 +1,5 @@
 const riot = require('../lolscrapper.js');
+const reply = require('../reply.js');
 
 async function stat(config, interaction)
 {
@@ -8,7 +9,7 @@ async function stat(config, interaction)
         interaction.reply('This player doesn\'t exist.');
         return;
         }
-        var message = reply.summoner_stat(region, stats.summonerName,
+        var message = reply.summoner_stat(config.region, stats.summonerName,
                     stats.profileIcon, stats.tier, stats.rank,
                     stats.leaguePoints, stats.winrate, stats.wins,
                     stats.losses, stats.opgg, stats.hotStreak);

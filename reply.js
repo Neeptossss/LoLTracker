@@ -24,7 +24,7 @@ function summoner_stat(
     },
     description: `This player have ${wins} wins and ${losses} losses over past 7 days.`,
     thumbnail: {
-      url: `https://github.com/Neeptossss/League-of-Legends-RanksAssets/raw/main/${tier}.png`,
+      url: `https://github.com/Neeptossss/LoLTracker/raw/main/ranks/${tier}.png`,
     },
     fields: [
       {
