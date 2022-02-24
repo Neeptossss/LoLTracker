@@ -1,8 +1,15 @@
 const db = require("../database.js");
+const riot = require('../lolscrapper.js');
 
 async function add_to_leaderboard(config, interaction)
 {
+    console.log(config.region);
     var username_arg = interaction.options.get('username')?.value;
+    var stats = await riot.scrapper(config.region, username_arg);
+    if (stats.exists === false) {
+        interaction.reply('This player doesn\'t exist.');
+        return;
+    }
     if (await db.check_channel_set(interaction.guild.id) === false) {
         interaction.reply('Please set a channel first.');
         return;
@@ -11,7 +18,7 @@ async function add_to_leaderboard(config, interaction)
         interaction.reply('This player is already in the leaderboard.');
         return;
     }
-    db.add_user(config.region, interaction.guild.id, username_arg);
+    db.add_user(interaction.guild.id, stats);
     await interaction.reply(`${username_arg} added to leaderboard.`);
 }
 

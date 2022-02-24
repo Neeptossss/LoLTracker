@@ -46,13 +46,12 @@ async function user_exist(guild_id, summoner_name) {
     return true;
 }
 
-async function add_user(region, guild_id, summoner_name) {
+async function add_user(guild_id, stats) {
   var guild_ref = ref.child(guild_id);
-  var summoner_ref = guild_ref.child(summoner_name);
+  var summoner_ref = guild_ref.child(stats.summonerName);
   var summoner_data = await summoner_ref.once("value");
-  var stats = await lol.scrapper(region, summoner_name);
   if (summoner_data.val() === null) {
-    summoner_ref.child("hotStreak").set(stats.hotStreak);
+    stats.hotStreak ? summoner_ref.child("hotStreak").set(stats.hotStreak) : summoner_ref.child("hotStreak").set(false);
     summoner_ref.child("rank").set(stats.tier + " " + stats.rank);
     summoner_ref.child("leaguePoints").set(stats.leaguePoints);
     summoner_ref.child("wins").set(stats.wins);

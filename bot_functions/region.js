@@ -1,4 +1,5 @@
 const utils = require("../utils_ds.js");
+const fs = require("fs");
 
 async function region(config, interaction)
 {
@@ -7,7 +8,8 @@ var region_arg = interaction.options.get('region')?.value;
       interaction.reply(`${region_arg} is not a valid region.`);
       return;
     }
-    config.region = utils.format_region(region_arg);
+    new_region = utils.format_region(region_arg);
+    config.region = new_region;
     await interaction.reply(`New region set to ${region_arg}.`);
 }
 
