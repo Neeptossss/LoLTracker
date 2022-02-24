@@ -3,7 +3,6 @@ const riot = require('../lolscrapper.js');
 
 async function add_to_leaderboard(config, interaction)
 {
-    console.log(config.region);
     var username_arg = interaction.options.get('username')?.value;
     var stats = await riot.scrapper(config.region, username_arg);
     if (stats.exists === false) {

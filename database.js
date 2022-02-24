@@ -33,7 +33,13 @@ async function set_channel(guild_id, channel_id) {
 async function remove_user(guild_id, summoner_name) {
   var guild_ref = ref.child(guild_id);
   var guild_data = await guild_ref.once("value");
-  guild_ref.child(summoner_name).remove();
+  if (guild_data.val() === null)
+    return;
+  summoner_ref = guild_ref.child(summoner_name);
+  summoner_data = await summoner_ref.once("value");
+  if (summoner_data.val() === null)
+    return;
+  summoner_ref.remove();
 }
 
 async function user_exist(guild_id, summoner_name) {
