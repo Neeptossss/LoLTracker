@@ -1,0 +1,23 @@
+{
+  "name": "loltracker",
+  "version": "1.0.0",
+  "description": "League of Legends Tracker bot for Discord",
+  "main": "dsbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neeptossss/LoLTracker.git"
+  },
+  "author": "Gwenael HUBLER",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Neeptossss/LoLTracker/issues"
+  },
+  "homepage": "https://github.com/Neeptossss/LoLTracker#readme",
+  "dependencies": {
+    "firebase": "^9.6.7",
+    "firebase-admin": "^10.0.2"
+  }
+}
