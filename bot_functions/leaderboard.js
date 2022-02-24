@@ -1,13 +1,15 @@
 const db = require("../database.js");
+const reply = require("../reply.js");
 
-async function check_channel_set(interaction)
+async function leaderboard(config, interaction)
 {
     if (await db.check_channel_set(interaction.guild.id) === false) {
-    interaction.reply('Please set a channel first.');
-    return;
+        interaction.reply('Please set a channel first.');
+        return;
     }
-    var {embed, row} = reply.leaderboard_stat(region);
-    await interaction.reply({embeds: [embed], components: [row]});
+    let data = await db.get_leaderboard(interaction.guild.id);
+    let embed = reply.leaderboard_stat(config.region, data);
+    await interaction.reply({embeds: [embed]});
 }
 
-module.exports = check_channel_set;
+module.exports = leaderboard;

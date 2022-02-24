@@ -35,7 +35,8 @@ async function remove_user(guild_id, summoner_name) {
   var guild_data = await guild_ref.once("value");
   if (guild_data.val() === null)
     return;
-  summoner_ref = guild_ref.child(summoner_name);
+  var users_ref = guild_ref.child('users');
+  summoner_ref = users_ref.child(summoner_name);
   summoner_data = await summoner_ref.once("value");
   if (summoner_data.val() === null)
     return;
@@ -44,7 +45,8 @@ async function remove_user(guild_id, summoner_name) {
 
 async function user_exist(guild_id, summoner_name) {
   var guild_ref = ref.child(guild_id);
-  var summoner_ref = guild_ref.child(summoner_name);
+  var users_ref = guild_ref.child('users');
+  var summoner_ref = users_ref.child(summoner_name);
   var summoner_data = await summoner_ref.once("value");
   if (summoner_data.val() === null)
     return false;
@@ -54,16 +56,27 @@ async function user_exist(guild_id, summoner_name) {
 
 async function add_user(guild_id, stats) {
   var guild_ref = ref.child(guild_id);
-  var summoner_ref = guild_ref.child(stats.summonerName);
+  var users_ref = guild_ref.child('users');
+  var summoner_ref = users_ref.child(stats.summonerName);
   var summoner_data = await summoner_ref.once("value");
   if (summoner_data.val() === null) {
     stats.hotStreak ? summoner_ref.child("hotStreak").set(stats.hotStreak) : summoner_ref.child("hotStreak").set(false);
     summoner_ref.child("rank").set(stats.tier + " " + stats.rank);
     summoner_ref.child("leaguePoints").set(stats.leaguePoints);
     summoner_ref.child("wins").set(stats.wins);
+    summoner_ref.child("summonerName").set(stats.summonerName);
     summoner_ref.child("losses").set(stats.losses);
     summoner_ref.child("winrate").set(stats.winrate);
   }
 }
 
-module.exports = { check_channel_set, user_exist, set_channel, add_user, remove_user };
+async function get_leaderboard(guild_id)
+{
+  var guild_ref = ref.child(guild_id);
+  var guild_data = await guild_ref.once("value");
+  if (guild_data.val() === null)
+    return;
+  return guild_data.val();
+}
+
+module.exports = { check_channel_set, user_exist, set_channel, add_user, remove_user, get_leaderboard };

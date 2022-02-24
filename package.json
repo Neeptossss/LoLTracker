@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/Neeptossss/LoLTracker#readme",
   "dependencies": {
+    "embed-table": "^3.0.0",
     "firebase": "^9.6.7",
-    "firebase-admin": "^10.0.2"
+    "firebase-admin": "^10.0.2",
+    "table-layout": "^3.0.0"
   }
 }
