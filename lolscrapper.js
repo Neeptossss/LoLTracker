@@ -81,8 +81,6 @@ async function scrapper(region, summonerName) {
     for (var key in stat) {
         stat[key] = stat[key].toString();
     }
-    // console.log("Patch: " + patch);
-    // console.log("STATS de", summonerName + "\n============\n" + "LP:", stat.leaguePoints, "\nRank:", stat.tier, stat.rank, "\nWin rate:", (stat.wins / (stat.losses + stat.wins) * 100).toFixed(1), "%", "\nHot ?:", stat.hotStreak);
     return stat;
 }
 
