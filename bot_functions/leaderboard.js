@@ -8,7 +8,7 @@ async function leaderboard(config, interaction)
         return;
     }
     let data = await db.get_leaderboard(interaction.guild.id);
-    let embed = reply.leaderboard_stat(config.region, data);
+    let embed = reply.leaderboard_stat(interaction, config.region, data.users);
     await interaction.reply({embeds: [embed]});
 }
 

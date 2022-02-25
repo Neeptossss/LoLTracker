@@ -64,10 +64,29 @@ async function add_user(guild_id, stats) {
     summoner_ref.child("rank").set(stats.tier + " " + stats.rank);
     summoner_ref.child("leaguePoints").set(stats.leaguePoints);
     summoner_ref.child("wins").set(stats.wins);
-    summoner_ref.child("summonerName").set(stats.summonerName);
     summoner_ref.child("losses").set(stats.losses);
     summoner_ref.child("winrate").set(stats.winrate);
   }
+}
+
+async function check_max_users(guild_id) {
+  var guild_ref = ref.child(guild_id);
+  var guild_data = await guild_ref.once("value");
+  if (guild_data.val() === null)
+    return;
+  var users_ref = guild_ref.child('users');
+  var users_data = await users_ref.once("value");
+  if (users_data.val() === null)
+    return;
+  let users = users_data.val();
+  let count = 0;
+  for (key in users) {
+    count++;
+  }
+  if (count >= 10)
+    return true;
+  else
+    return false;
 }
 
 async function get_leaderboard(guild_id)
@@ -79,4 +98,4 @@ async function get_leaderboard(guild_id)
   return guild_data.val();
 }
 
-module.exports = { check_channel_set, user_exist, set_channel, add_user, remove_user, get_leaderboard };
+module.exports = { check_channel_set, user_exist, set_channel, add_user, check_max_users, remove_user, get_leaderboard };

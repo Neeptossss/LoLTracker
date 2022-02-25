@@ -1,6 +1,7 @@
 const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
 const TableLayout = require('table-layout')
 const { Table } = require('embed-table');
+const utils = require("./utils_ds.js");
 
 function summoner_stat(
   region,
@@ -52,37 +53,43 @@ function summoner_stat(
   return message;
 }
 
-function leaderboard_stat(region, data)
+function leaderboard_stat(interaction, region, users)
 {
-  //get the longest summonerName
-  users = data.users
   var longest_summonerName = 0
+  var longest_rank = 0
   for (var key in users) {
     if (key.length > longest_summonerName)
       longest_summonerName = key.length
-  }
-  //get the longest rank
-  var longest_rank = 0
-  for (var key in users) {
     if (users[key].rank.length > longest_rank)
       longest_rank = users[key].rank.length
   }
-  const table = new Table({
-    titles: ['Summoner', 'Rank', 'LP', 'Winrate'],
-    titleIndexes: [0, 9, 14, 17],
-    columnIndexes: [0, longest_summonerName + 1, longest_rank + longest_summonerName + 1, longest_summonerName + longest_rank + 3],
-    padEnd: 4
-  });
+  title0 = 'Rank';
+  title1 = 'Summoner';
+  title2 = 'Tier';
+  title3 = 'LP';
+  title4 = 'Winrate';
+  title = '`' + title0 + '  ' + title1 + ' '.repeat(longest_summonerName - title1.length + 2) + title2 + ' '.repeat(longest_rank - title2.length + 2) + title3 + '  ' + title4 + '`';
+  console.log(title);
+  const embed = new MessageEmbed()
+  .setTitle(`Leaderboard of ${interaction.guild.name}`)
+  .setDescription('Salut les amis !')
+  .setColor(0xd48f16)
+  .setTimestamp();
+  i = 1;
+  let res = '';
   for (var key in users) {
-    table.addRow([
-      key,
-      users[key].rank,
-      users[key].leaguePoints,
-      users[key].winrate + "%",
-    ]);
+    let rank;
+    if (i === 1) rank = '🥇';
+    else if (i === 2) rank = '🥈';
+    else if (i === 3) rank = '🥉';
+    else rank = i + ' ';
+    if (users[key].rank === 'Unranked 0') users[key].rank = 'Unranked';
+    let line = ('`' + rank + ' '.repeat(4 + (i >= 10 ? 1 : 0)) + key + ' '.repeat(longest_summonerName - key.length + 3) + users[key].rank + ' '.repeat(longest_rank - users[key].rank.length + 2) + users[key].leaguePoints + '  ' + users[key].winrate + '%' + '`' + '\n');
+    res += (line);
+    i++;
   }
-  const embed = new MessageEmbed().addFields(table.field());
-  console.log(table);
+  console.log(res);
+  embed.addField(title, res, false);
   return embed;
 }
 
