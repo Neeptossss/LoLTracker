@@ -8,6 +8,10 @@ async function add_to_leaderboard(config, interaction)
         interaction.reply('Please set a channel first.');
         return;
     }
+    if (interaction.channel.id !== await db.get_channel(interaction.guild.id)) {
+        interaction.reply('This command can only be used in the channel set by the bot.');
+        return;
+    }
     if (await db.user_exist(interaction.guild.id, username_arg) === true) {
         interaction.reply('This player is already in the leaderboard.');
         return;

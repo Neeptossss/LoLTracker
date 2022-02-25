@@ -51,10 +51,9 @@ function summoner_stat(
   return message;
 }
 
-function leaderboard_stat(interaction, region, users)
+function leaderboard_stat(interaction, users)
 {
-  var longest_summonerName = 0
-  var longest_rank = 0
+  var longest_summonerName = 0, longest_rank = 0
   for (var key in users) {
     if (key.length > longest_summonerName)
       longest_summonerName = key.length
@@ -66,7 +65,8 @@ function leaderboard_stat(interaction, region, users)
   title2 = 'Tier';
   title3 = 'LP';
   title4 = 'Winrate';
-  title = '`' + title0 + '  ' + title1 + ' '.repeat(longest_summonerName - title1.length + 2) + title2 + ' '.repeat(longest_rank - title2.length + 2) + title3 + '  ' + title4 + '`';
+  title = '`' + title0 + '  ' + title1 + ' '.repeat(longest_summonerName - title1.length + 2) +
+          title2 + ' '.repeat(longest_rank - title2.length + 2) + title3 + '  ' + title4 + '`';
   console.log(title);
   const embed = new MessageEmbed()
   .setTitle(`Leaderboard of ${interaction.guild.name}`)

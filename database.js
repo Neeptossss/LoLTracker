@@ -117,5 +117,14 @@ async function get_leaderboard(guild_id)
   return guild_data.val();
 }
 
+async function get_channel(guild_id)
+{
+  var guild_ref = ref.child(guild_id);
+  var guild_data = await guild_ref.once("value");
+  if (guild_data.val() === null)
+    return;
+  return guild_data.val().channelId;
+}
+
 module.exports = { check_channel_set, user_exist, set_channel, add_user,
-                  check_has_users, check_max_users, remove_user, get_leaderboard };
+                  check_has_users, check_max_users, remove_user, get_leaderboard, get_channel };

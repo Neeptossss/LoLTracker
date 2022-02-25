@@ -7,12 +7,16 @@ async function leaderboard(config, interaction)
         interaction.reply('Please set a channel first.');
         return;
     }
+    if (interaction.channel.id !== await db.get_channel(interaction.guild.id)) {
+        interaction.reply('This command can only be used in the channel set by the bot.');
+        return;
+    }
     if (await db.check_has_users(interaction.guild.id) === false) {
         interaction.reply('The leaderboard is empty.');
         return;
     }
     let data = await db.get_leaderboard(interaction.guild.id);
-    let embed = reply.leaderboard_stat(interaction, config.region, data.users);
+    let embed = reply.leaderboard_stat(interaction, data.users);
     await interaction.reply({embeds: [embed]});
 }
 
