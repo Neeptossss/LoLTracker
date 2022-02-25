@@ -28,7 +28,7 @@ function sort_rank(users)
             'GOLD IV', 'GOLD III', 'GOLD II', 'GOLD I',
             'PLATINUM IV', 'PLATINUM III', 'PLATINUM II', 'PLATINUM I',
             'DIAMOND IV', 'DIAMOND III', 'DIAMOND II', 'DIAMOND I',
-            'MASTER', 'GRANDMASTER', 'CHALLENGER'];
+            'MASTER I', 'GRANDMASTER I', 'CHALLENGER I'];
     for (var key in users) {
         users[key].leaderboardRank = ranks.indexOf(users[key].rank);
     }

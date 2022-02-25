@@ -13,6 +13,7 @@ let config = JSON.parse(rawdata);
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(`Present in ${client.guilds.cache.size} guild(s)`);
+  client.user.setActivity('your stats', { type: 'WATCHING' });
 });
 
 client.on('interactionCreate', async interaction => {
@@ -28,12 +29,12 @@ client.on('interactionCreate', interaction => {
   }
 });
 
-client.on('messageCreate', async message => {
-  if (message.author.bot) return;
-  console.log(`Received message: ${message.content}`);
-  if (db.check_same_channel(message.guildId, message.channelId === true)) {
-    message.delete();
-  }
-});
+// client.on('messageCreate', async message => {
+//   if (message.author.bot) return;
+//   console.log(`Received message: ${message.content}`);
+//   if (db.check_same_channel(message.guildId, message.channelId === true)) {
+//     message.delete();
+//   }
+// });
 
 client.login(process.env.DS_TOKEN);
