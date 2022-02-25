@@ -1,4 +1,5 @@
 const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
+const utils = require("./utils_ds.js");
 
 function summoner_stat(
   region,
@@ -67,7 +68,6 @@ function leaderboard_stat(interaction, users)
   title4 = 'Winrate';
   title = '`' + title0 + '  ' + title1 + ' '.repeat(longest_summonerName - title1.length + 3) +
           title2 + ' '.repeat(longest_rank - title2.length + 2) + title3 + '  ' + title4 + '`';
-  console.log(title);
   const embed = new MessageEmbed()
   .setTitle(`Leaderboard of ${interaction.guild.name}`)
   .setDescription(' ')
@@ -75,9 +75,11 @@ function leaderboard_stat(interaction, users)
   .setTimestamp();
   i = 1;
   let res = '';
+  users = utils.sort_rank(users);
+  console.log(users);
   for (var key in users) {
     users[key].winrate += '%';
-    let rank, percentage;
+    let rank, percentage, hotStreak;
     if (i === 1) rank = '🥇';
     else if (i === 2) rank = '🥈';
     else if (i === 3) rank = '🥉';
@@ -86,13 +88,21 @@ function leaderboard_stat(interaction, users)
     else percentage = users[key].winrate;
     if (users[key].rank === 'Unranked 0') users[key].rank = 'Unranked';
     if (users[key].leaguePoints.length < 2) users[key].leaguePoints += ' ';
-    let line = ('`' + rank + ' '.repeat(4 + (i >= 10 ? 1 : 0)) + key + ' '.repeat(longest_summonerName - key.length + 3) + users[key].rank + ' '.repeat(longest_rank - users[key].rank.length + 2) + users[key].leaguePoints + '  ' + percentage + '`' + '\n');
+    if (users[key].hotStreak === ('true' || true)) hotStreak = '🔥';
+    else hotStreak = ' ';
+    let line = ('`' + rank + ' '.repeat(4 + (i >= 10 ? 1 : 0)) + key + ' '.repeat(longest_summonerName - key.length + 3) + users[key].rank + ' '.repeat(longest_rank - users[key].rank.length + 2) + users[key].leaguePoints + '  ' + percentage + '`' + ' ' + hotStreak + '\n');
     res += (line);
     i++;
   }
   console.log(res);
   embed.addField(title, res, false);
-  return embed;
+  const row = new MessageActionRow().addComponents(
+    new MessageButton()
+      .setCustomId("refresh")
+      .setLabel("Refresh")
+      .setStyle("PRIMARY")
+  );
+  return {embed, row};
 }
 
 module.exports = { summoner_stat, leaderboard_stat };

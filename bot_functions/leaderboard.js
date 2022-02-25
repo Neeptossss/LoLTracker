@@ -16,8 +16,8 @@ async function leaderboard(interaction)
         return;
     }
     let data = await db.get_leaderboard(interaction.guild.id);
-    let embed = reply.leaderboard_stat(interaction, data.users);
-    await interaction.reply({embeds: [embed]});
+    let { embed, row } = reply.leaderboard_stat(interaction, data.users);
+    await interaction.reply({embeds: [embed], components: [row]});
 }
 
 module.exports = leaderboard;

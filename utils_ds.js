@@ -20,4 +20,25 @@ function format_region(region)
     if (region === 'tr') return 'tr1';
 }
 
-module.exports = { is_valid_region, format_region };
+function sort_rank(users)
+{
+    const ranks = ['Unranked 0', 'IRON IV', 'IRON III', 'IRON II', 'IRON I',
+            'BRONZE IV', 'BRONZE III', 'BRONZE II', 'BRONZE I',
+            'SILVER IV', 'SILVER III', 'SILVER II', 'SILVER I',
+            'GOLD IV', 'GOLD III', 'GOLD II', 'GOLD I',
+            'PLATINUM IV', 'PLATINUM III', 'PLATINUM II', 'PLATINUM I',
+            'DIAMOND IV', 'DIAMOND III', 'DIAMOND II', 'DIAMOND I',
+            'MASTER', 'GRANDMASTER', 'CHALLENGER'];
+    for (var key in users) {
+        users[key].leaderboardRank = ranks.indexOf(users[key].rank);
+    }
+    users = Object.keys(users).sort(function(a, b) {
+        return users[b].leaderboardRank - users[a].leaderboardRank;
+    }).reduce(function(result, key) {
+        result[key] = users[key];
+        return result;
+    }, {});
+    return users;
+}
+
+module.exports = { is_valid_region, format_region, sort_rank };

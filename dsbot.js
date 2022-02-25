@@ -5,6 +5,7 @@ const router = require('./bot_functions/_main_router');
 const { Client, Intents, CommandInteractionOptionResolver } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, "GUILD_MESSAGES"] });
 const db = require('./database');
+const refresh = require('./bot_functions/leaderboard_refresh');
 
 let rawdata = fs.readFileSync(path.resolve(__dirname, 'config.json'));
 let config = JSON.parse(rawdata);
@@ -20,12 +21,12 @@ client.on('interactionCreate', async interaction => {
   router(config, interaction);
 });
 
-// client.on('interactionCreate', interaction => {
-// 	if (!interaction.isButton()) return;
-// 	if (interaction.customId === 'refresh') {
-//     interaction.reply({content: 'Refreshing...', ephemeral: true});
-//   }
-// });
+client.on('interactionCreate', interaction => {
+	if (!interaction.isButton()) return;
+	if (interaction.customId === 'refresh') {
+    refresh(interaction);
+  }
+});
 
 client.on('messageCreate', async message => {
   if (message.author.bot) return;
