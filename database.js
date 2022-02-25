@@ -74,6 +74,19 @@ async function add_user(guild_id, stats)
   }
 }
 
+async function check_has_users(guild_id)
+{
+  var guild_ref = ref.child(guild_id);
+  var guild_data = await guild_ref.once("value");
+  if (guild_data.val() === null)
+    return false;
+  var users_ref = guild_ref.child('users');
+  var users_data = await users_ref.once("value");
+  if (users_data.val() === null)
+    return false;
+  return true;
+}
+
 async function check_max_users(guild_id)
 {
   var guild_ref = ref.child(guild_id);
@@ -85,7 +98,7 @@ async function check_max_users(guild_id)
   if (users_data.val() === null)
     return;
   let users = users_data.val();
-  let count = 0;
+  let count = 1;
   for (key in users) {
     count++;
   }
@@ -104,4 +117,5 @@ async function get_leaderboard(guild_id)
   return guild_data.val();
 }
 
-module.exports = { check_channel_set, user_exist, set_channel, add_user, check_max_users, remove_user, get_leaderboard };
+module.exports = { check_channel_set, user_exist, set_channel, add_user,
+                  check_has_users, check_max_users, remove_user, get_leaderboard };
