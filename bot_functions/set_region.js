@@ -1,5 +1,4 @@
 const utils = require("../utils_ds.js");
-const fs = require("fs");
 
 async function region(config, interaction)
 {
