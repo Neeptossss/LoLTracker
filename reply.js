@@ -1,7 +1,4 @@
 const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js");
-const TableLayout = require('table-layout')
-const { Table } = require('embed-table');
-const utils = require("./utils_ds.js");
 
 function summoner_stat(
   region,
@@ -15,7 +12,8 @@ function summoner_stat(
   losses,
   opgg,
   hotStreak
-) {
+)
+{
   const message = {
     color: 0xd48f16,
     title: `Stats of ${summonerName} ${hotStreak === "true" ? "🔥" : " "}`,

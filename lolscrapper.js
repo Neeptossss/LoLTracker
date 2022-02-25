@@ -51,7 +51,8 @@ async function get_stats(region, encryptedSummonerID) {
         .catch((error) => console.log(error));
 }
 
-async function scrapper(region, summonerName) {
+async function scrapper(region, summonerName)
+{
     const patch = await get_version();
     var summoner = await get_encryptedSummonerID(region, summonerName);
     if (summoner.status) {

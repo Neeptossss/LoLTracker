@@ -11,7 +11,8 @@ admin.initializeApp({
 var db = admin.database();
 var ref = db.ref("/");
 
-async function check_channel_set(guild_id) {
+async function check_channel_set(guild_id)
+{
   var guild_ref = ref.child(guild_id);
   var guild_data = await guild_ref.once("value");
   if (guild_data.val() === null)
@@ -21,7 +22,8 @@ async function check_channel_set(guild_id) {
   return true;
 }
 
-async function set_channel(guild_id, channel_id) {
+async function set_channel(guild_id, channel_id)
+{
   var guild_ref = ref.child(guild_id);
   var guild_data = await guild_ref.once("value");
   if (guild_data.val() === null)
@@ -30,7 +32,8 @@ async function set_channel(guild_id, channel_id) {
     guild_ref.update({channelId: channel_id});
 }
 
-async function remove_user(guild_id, summoner_name) {
+async function remove_user(guild_id, summoner_name)
+{
   var guild_ref = ref.child(guild_id);
   var guild_data = await guild_ref.once("value");
   if (guild_data.val() === null)
@@ -43,7 +46,8 @@ async function remove_user(guild_id, summoner_name) {
   summoner_ref.remove();
 }
 
-async function user_exist(guild_id, summoner_name) {
+async function user_exist(guild_id, summoner_name)
+{
   var guild_ref = ref.child(guild_id);
   var users_ref = guild_ref.child('users');
   var summoner_ref = users_ref.child(summoner_name);
@@ -54,7 +58,8 @@ async function user_exist(guild_id, summoner_name) {
     return true;
 }
 
-async function add_user(guild_id, stats) {
+async function add_user(guild_id, stats)
+{
   var guild_ref = ref.child(guild_id);
   var users_ref = guild_ref.child('users');
   var summoner_ref = users_ref.child(stats.summonerName);
@@ -69,7 +74,8 @@ async function add_user(guild_id, stats) {
   }
 }
 
-async function check_max_users(guild_id) {
+async function check_max_users(guild_id)
+{
   var guild_ref = ref.child(guild_id);
   var guild_data = await guild_ref.once("value");
   if (guild_data.val() === null)
