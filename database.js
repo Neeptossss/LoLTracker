@@ -11,6 +11,17 @@ admin.initializeApp({
 var db = admin.database();
 var ref = db.ref("/");
 
+async function check_same_channel(guild_id, channeId)
+{
+  var guild_ref = ref.child(guild_id);
+  var guild_data = await guild_ref.once("value");
+  if (guild_data.val() === null)
+    return;
+  if (guild_data.val().channelId === channeId)
+    return true;
+  return false;
+}
+
 async function check_channel_set(guild_id)
 {
   var guild_ref = ref.child(guild_id);
@@ -126,5 +137,5 @@ async function get_channel(guild_id)
   return guild_data.val().channelId;
 }
 
-module.exports = { check_channel_set, user_exist, set_channel, add_user,
+module.exports = { check_same_channel, check_channel_set, user_exist, set_channel, add_user,
                   check_has_users, check_max_users, remove_user, get_leaderboard, get_channel };
