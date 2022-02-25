@@ -1,7 +1,7 @@
 const add_to_leaderboard = require('./add_to_leaderboard');
 const remove_from_leaderboard = require('./remove_from_leaderboard');
 const leaderboard = require('./leaderboard');
-const region = require('./region');
+const region = require('./set_region');
 const set_channel = require('./set_channel');
 const stat = require('./stat');
 
@@ -9,7 +9,7 @@ async function router(config, interaction)
 {
     if (interaction.commandName == 'stat')
         stat(config, interaction);
-    if (interaction.commandName == 'region')
+    if (interaction.commandName == 'set_region')
         region(config, interaction);
     if (interaction.commandName == 'leaderboard')
         leaderboard(config, interaction);

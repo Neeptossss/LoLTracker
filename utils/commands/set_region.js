@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Options } = require('discord.js');
 
 const data = new SlashCommandBuilder()
-	.setName('region')
+	.setName('set_region')
 	.setDescription('Change the region of the bot')
 	.addStringOption(option =>
 		option.setName('region')

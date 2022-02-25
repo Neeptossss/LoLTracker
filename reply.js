@@ -72,7 +72,7 @@ function leaderboard_stat(interaction, region, users)
   console.log(title);
   const embed = new MessageEmbed()
   .setTitle(`Leaderboard of ${interaction.guild.name}`)
-  .setDescription('Salut les amis !')
+  .setDescription(' ')
   .setColor(0xd48f16)
   .setTimestamp();
   i = 1;
