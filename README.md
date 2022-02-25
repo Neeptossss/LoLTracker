@@ -4,10 +4,10 @@ A Node.JS Discord bot that track using Riot API stats of summoners. Can be displ
 
 
 
-## Installation for windows
+## Installation
 #### Prerequisites
 
-TODO
+A GCP project linked to firebase, Discord bot token, an Riot API Token
     
 #### Get started
 
