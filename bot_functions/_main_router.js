@@ -12,7 +12,7 @@ async function router(config, interaction)
     if (interaction.commandName == 'set_region')
         region(config, interaction);
     if (interaction.commandName == 'leaderboard')
-        leaderboard(config, interaction);
+        leaderboard(interaction);
     if (interaction.commandName == 'add_to_leaderboard')
         add_to_leaderboard(config, interaction);
     if (interaction.commandName == 'set_channel')
