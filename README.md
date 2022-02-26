@@ -5,7 +5,7 @@ A Node.JS Discord bot that track using Riot API stats of summoners. Create a ser
 
 
 ## Installation
-#### Prerequisites
+#### Prerequisites 🛠️
 
 Node >= v16.14.0
 #### Add Firebase 🔥
