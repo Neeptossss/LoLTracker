@@ -38,7 +38,7 @@ Node >= v16.14.0
 - Click 'Register a product' button
 - Select Personnal API Key and follow the steps
 - Go to your profile and you should have your Personnal API Key (Riot must approve your app, it can take several days)
-Create a `.env` file at the root of the directory and put your keys in like the example below :
+- Create a `.env` file at the root of the directory and put your keys in like the example below :
 ```env
 LOL_TOKEN=RGAPI-xxxxxxx-xxxx-xxxxx-xxxxx-xxxxxxxxxxx
 DS_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
