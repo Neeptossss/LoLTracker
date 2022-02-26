@@ -33,6 +33,7 @@ Your JSON file should be something like this :
 
 #### Create a Discord application and bot
 - [Follow this tutorial to create your Discord bot token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)
+- Add your bot to your server by generating a link in your developper dashboard (make sure to give enought permissions)
 - Login to [Riot Developper Portal](https://developer.riotgames.com/)
 - Click 'Register a product' button
 - Select Personnal API Key and follow the steps
