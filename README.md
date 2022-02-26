@@ -13,7 +13,7 @@ Node >= v16.14.0
 - [Follow this tutorial to create a Firebase project](https://cloud.google.com/firestore/docs/client/get-firebase)
 - In your Firebase dashboard, enable Realtime Database
 - [Continue by creating a Web app for this project](https://firebase.google.com/docs/web/setup)
-Your JSON file should be something like this :
+- Your JSON file should be something like this :
 ```json
   {
   "type": "service_account",
