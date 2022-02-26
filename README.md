@@ -8,7 +8,7 @@ A Node.JS Discord bot that track using Riot API stats of summoners. Create a ser
 #### Prerequisites
 
 Node >= v16.14.0
-#### Add Firebase
+#### Add Firebase 🔥
 
 - [Follow this tutorial to create a Firebase project](https://cloud.google.com/firestore/docs/client/get-firebase)
 - In your Firebase dashboard, enable Realtime Database
@@ -31,7 +31,7 @@ Node >= v16.14.0
 - Rename your JSON file `firebase.json`
 - Create a `cred` directory at the root of the project and put your `firebase.json` inside
 
-#### Create a Discord application and bot
+#### Create a Discord application and bot 🤖
 - [Follow this tutorial to create your Discord bot token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)
 - Add your bot to your server by generating a link in your developper dashboard (make sure to give enought permissions)
 - Login to [Riot Developper Portal](https://developer.riotgames.com/)
@@ -44,7 +44,7 @@ LOL_TOKEN=RGAPI-xxxxxxx-xxxx-xxxxx-xxxxx-xxxxxxxxxxx
 DS_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-#### Get started
+#### Get started ✅
 Install all the project dependencies
 ```bash
 > npm install
@@ -59,7 +59,7 @@ Logged in as LoL Tracker#XXXX!
 Present in 1 guild(s)
 ```
 
-## Authors
+## Authors ✒️
 
 - [@Neeptossss](https://www.github.com/Neeptossss)
 
