@@ -58,8 +58,6 @@ Logged in as LoL Tracker#XXXX!
 Present in 1 guild(s)
 ```
 
-## Usage
-TODO
 ## Authors
 
 - [@Neeptossss](https://www.github.com/Neeptossss)
