@@ -6,7 +6,8 @@ A Node.JS Discord bot that track using Riot API stats of summoners. Create a ser
 ## Prerequisites
 
 - Docker Engine
-- Docker-compose
+- Docker Compose
+- Make sure Docker Daemon is running and working before starting the application
 ## Installation
 #### Create a Discord application and bot 🤖
 - [Follow this tutorial to create your Discord bot token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)
