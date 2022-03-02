@@ -1,140 +1,141 @@
-var admin = require("firebase-admin");
-const lol = require("./lolscrapper.js");
+const mongoose = require('mongoose');
 
-var serviceAccount = require("./cred/firebase.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://loltracker-f22c6-default-rtdb.europe-west1.firebasedatabase.app",
+const clientOptions = {
+    useNewUrlParser   : true,
+    dbName            : 'loltracker'
+};
+mongoose.connect(process.env.MONGO_URL, clientOptions);
+var conn = mongoose.connection;
+conn.on('connected', function() {
+    console.log('database is connected successfully');
 });
+conn.on('disconnected',function(){
+    console.log('database is disconnected successfully');
+})
+conn.on('error', console.error.bind(console, 'connection error:'));
+module.exports = conn;
 
-var db = admin.database();
-var ref = db.ref("/");
-
-async function check_same_channel(guild_id, channeId)
+async function check_same_channel(guild_id, channel_id)
 {
-  var guild_ref = ref.child(guild_id);
-  var guild_data = await guild_ref.once("value");
-  if (guild_data.val() === null)
-    return;
-  if (guild_data.val().channelId === channeId)
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null)
+    return false;
+  if (guild_data.channel_id === channel_id)
     return true;
   return false;
 }
 
 async function check_channel_set(guild_id)
 {
-  var guild_ref = ref.child(guild_id);
-  var guild_data = await guild_ref.once("value");
-  if (guild_data.val() === null)
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null)
     return false;
-  if (guild_data.val().channelId === 0)
-    return false;
-  return true;
+  return true
 }
 
 async function set_channel(guild_id, channel_id)
 {
-  var guild_ref = ref.child(guild_id);
-  var guild_data = await guild_ref.once("value");
-  if (guild_data.val() === null)
-    ref.set({[guild_id]: {channelId: channel_id}});
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null) {
+    var new_guild = {
+      guild_id: guild_id,
+      channel_id: channel_id
+    };
+    await mongo_ref.insertOne(new_guild);
+  }
   else
-    guild_ref.update({channelId: channel_id});
+    await mongo_ref.updateOne({guild_id: guild_id}, {$set: {channel_id: channel_id}});
 }
 
 async function remove_user(guild_id, summoner_name)
 {
-  var guild_ref = ref.child(guild_id);
-  var guild_data = await guild_ref.once("value");
-  if (guild_data.val() === null)
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null)
     return;
-  var users_ref = guild_ref.child('users');
-  summoner_ref = users_ref.child(summoner_name);
-  summoner_data = await summoner_ref.once("value");
-  if (summoner_data.val() === null)
-    return;
-  summoner_ref.remove();
+  await mongo_ref.updateOne({guild_id: guild_id}, {$unset: {["users." + summoner_name]: ""}});
 }
 
 async function user_exist(guild_id, summoner_name)
 {
-  var guild_ref = ref.child(guild_id);
-  var users_ref = guild_ref.child('users');
-  var summoner_ref = users_ref.child(summoner_name);
-  var summoner_data = await summoner_ref.once("value");
-  if (summoner_data.val() === null)
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null)
     return false;
-  else
-    return true;
+  if (!guild_data.users)
+    return false;
+  if (!(summoner_name in guild_data.users))
+    return false;
+  return true;
 }
 
 async function add_user(guild_id, stats)
 {
-  var guild_ref = ref.child(guild_id);
-  var users_ref = guild_ref.child('users');
-  var summoner_ref = users_ref.child(stats.summonerName);
-  var summoner_data = await summoner_ref.once("value");
-  if (summoner_data.val() === null) {
-    stats.hotStreak ? summoner_ref.child("hotStreak").set(stats.hotStreak) : summoner_ref.child("hotStreak").set(false);
-    summoner_ref.child("rank").set(stats.tier + " " + stats.rank);
-    summoner_ref.child("leaguePoints").set(stats.leaguePoints);
-    summoner_ref.child("wins").set(stats.wins);
-    summoner_ref.child("losses").set(stats.losses);
-    summoner_ref.child("winrate").set(stats.winrate);
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  let formatted_stats = {
+    hotStreak: stats.hotStreak,
+    leaguePoints: stats.leaguePoints,
+    losses: stats.losses,
+    rank: stats.tier + ' ' + stats.rank,
+    winrate: stats.winrate,
+    wins: stats.wins
+  };
+  if (guild_data === null) {
+    var new_guild = {
+      guild_id: guild_id,
+      users: {[stats.summonerName]: formatted_stats}
+    };
+    await mongo_ref.insertOne(new_guild);
   }
+  else
+    await mongo_ref.updateOne({guild_id: guild_id}, {$set: {["users." + stats.summonerName]: formatted_stats}});
 }
 
 async function check_has_users(guild_id)
 {
-  var guild_ref = ref.child(guild_id);
-  var guild_data = await guild_ref.once("value");
-  if (guild_data.val() === null)
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null)
     return false;
-  var users_ref = guild_ref.child('users');
-  var users_data = await users_ref.once("value");
-  if (users_data.val() === null)
+  if (guild_data.users[0] === null)
     return false;
   return true;
 }
 
 async function check_max_users(guild_id)
 {
-  var guild_ref = ref.child(guild_id);
-  var guild_data = await guild_ref.once("value");
-  if (guild_data.val() === null)
-    return;
-  var users_ref = guild_ref.child('users');
-  var users_data = await users_ref.once("value");
-  if (users_data.val() === null)
-    return;
-  let users = users_data.val();
-  let count = 1;
-  for (key in users) {
-    count++;
-  }
-  if (count >= 10)
-    return true;
-  else
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null)
     return false;
+  if (!guild_data.users)
+    return false;
+  if (Object.keys(guild_data.users).length >= 9)
+    return true;
+  return false;
 }
 
 async function get_leaderboard(guild_id)
 {
-  var guild_ref = ref.child(guild_id);
-  var guild_data = await guild_ref.once("value");
-  if (guild_data.val() === null)
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null)
     return;
-  return guild_data.val();
+  console.log(guild_data);
+  return guild_data;
 }
 
 async function get_channel(guild_id)
 {
-  var guild_ref = ref.child(guild_id);
-  var guild_data = await guild_ref.once("value");
-  if (guild_data.val() === null)
+  var mongo_ref = conn.db.collection('loltracker');
+  var guild_data = await mongo_ref.findOne({guild_id: guild_id});
+  if (guild_data === null)
     return;
-  return guild_data.val().channelId;
+  return guild_data.channel_id;
 }
 
 module.exports = { check_same_channel, check_channel_set, user_exist, set_channel, add_user,

@@ -1,8 +1,8 @@
-require("dotenv").config();
-
 const fetch = require("node-fetch");
+const fs = require('fs');
+const path = require('path');
 
-const token = process.env.LOL_TOKEN;
+const token = (JSON.parse(fs.readFileSync(path.resolve(__dirname, 'config/config.json')))).riot_token;
 
 async function get_version() {
     return fetch(

@@ -1,0 +1,32 @@
+version: '3'
+services:
+
+  bot:
+    build: .
+    restart: on-failure
+    networks:
+      - back-tier
+    links:
+      - db
+    environment:
+      - MONGO_URL=mongodb://loltracker:password@db
+
+  db:
+    image: mongo:5.0.6
+    restart: on-failure
+    networks:
+      - back-tier
+    ports:
+      - "27017:27017"
+    volumes:
+      - db-data:/usr/share/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=loltracker
+      - MONGO_INITDB_ROOT_PASSWORD=password
+
+volumes:
+  db-data:
+
+networks:
+  back-tier:
+    driver: bridge
