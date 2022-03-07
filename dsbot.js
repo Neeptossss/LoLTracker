@@ -4,6 +4,7 @@ const router = require('./bot_functions/_main_router');
 const { Client, Intents, CommandInteractionOptionResolver } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, "GUILD_MESSAGES"] });
 const refresh = require('./bot_functions/leaderboard_refresh');
+require('./utils/deploy-commands');
 
 const config = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'config/config.json')));
 

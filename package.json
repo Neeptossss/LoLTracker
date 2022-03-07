@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/Neeptossss/LoLTracker#readme",
   "dependencies": {
-    "mongoose": "^6.2.4",
-    "discord.js": "^13.6.0"
+    "@discordjs/rest": "^0.3.0",
+    "discord.js": "^13.6.0",
+    "mongoose": "^6.2.4"
   }
 }

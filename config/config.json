@@ -1,5 +1,6 @@
 {
     "region": "euw1",
-    "discord_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "riot_token": "RGAPI-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    "clientId": "your-client-id",
+    "discord_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "riot_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 }
