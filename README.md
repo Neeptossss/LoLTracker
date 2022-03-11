@@ -12,7 +12,7 @@ A Node.JS Discord bot that track using Riot API stats of summoners. Create a ser
 #### Create a Discord application and bot 🤖
 - [Follow this tutorial to create your Discord bot token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)
 - Add your bot to your server by generating a link in your developper dashboard (make sure to give enought permissions)
-- Get your client ID (right click on your profile thne copy ID)
+- Get your client ID (right click on your profile then copy ID)
 #### Create your Riot Developer account 🪄
 - Login to [Riot Developper Portal](https://developer.riotgames.com/)
 - Click 'Register a product' button
