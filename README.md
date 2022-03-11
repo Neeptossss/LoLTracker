@@ -12,6 +12,7 @@ A Node.JS Discord bot that track using Riot API stats of summoners. Create a ser
 #### Create a Discord application and bot 🤖
 - [Follow this tutorial to create your Discord bot token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)
 - Add your bot to your server by generating a link in your developper dashboard (make sure to give enought permissions)
+- Get your client ID (right click on your profile thne copy ID)
 #### Create your Riot Developer account 🪄
 - Login to [Riot Developper Portal](https://developer.riotgames.com/)
 - Click 'Register a product' button
@@ -19,8 +20,9 @@ A Node.JS Discord bot that track using Riot API stats of summoners. Create a ser
 - Go to your profile and you should have your Personnal API Key (Riot must approve your app, it can take several days) (TIP: You can use your developpement key while waiting this key expire every day)
 - Go to config/config.json and replace 'x' with your keys like below :
 ```env
-LOL_TOKEN=RGAPI-xxxxxxx-xxxx-xxxxx-xxxxx-xxxxxxxxxxx
-DS_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+clientId=xxxxxxxxxxxxxxxxxxxx
+riot_token=RGAPI-xxxxxxx-xxxx-xxxxx-xxxxx-xxxxxxxxxxx
+discord_token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 #### Get started 🐋
